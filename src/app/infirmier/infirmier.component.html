@@ -1,0 +1,31 @@
+<h1>Liste infirmier</h1>
+<table class="heavyTable">
+  <thead>
+  <tr>
+    <th>Nom</th>
+    <th>prenom</th>
+    <th>Adresse</th>
+    <th>Patient</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let inf of infirmiers">
+    <td>{{ inf.nom }}</td>
+    <td>{{ inf['prénom'] }}</td>
+    <td>{{ inf.adresse.rue }} {{ inf.adresse['numéro'] }} {{ inf.adresse['étage'] }} ,{{ inf.adresse.ville }} {{ inf.adresse.codePostal}}</td>
+    <td>
+      <mat-form-field>
+        <mat-select  placeholder="Liste Patients"  name="willAffectId">
+          <mat-option *ngFor="let patient of inf.patients">{{ patient.nom }} {{ patient['prénom'] }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </tr>
+
+  <tr *ngIf="!infirmiers || infirmiers.length == 0">
+    <td colspan="6" > Pas de'infirmier</td>
+  </tr>
+
+
+  </tbody>
+</table>

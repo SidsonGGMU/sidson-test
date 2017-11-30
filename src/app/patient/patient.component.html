@@ -1,0 +1,37 @@
+<h1>Liste patients non afectée</h1>
+<table class="heavyTable">
+  <thead>
+    <tr>
+      <th>Adresse</th>
+      <th>Nom</th>
+      <th>Prenom</th>
+      <th>Numéro Sécurité Sociale</th>
+      <th>Sexe</th>
+      <th>Affecter à</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let patient of patientsNonAffecte">
+      <td>{{ patient.adresse.rue }} {{ patient.adresse['numéro'] }} {{ patient.adresse['étage'] }} ,{{ patient.adresse.ville }} {{ patient.adresse.codePostal}}</td>
+      <td>{{ patient.nom }}</td>
+      <td>{{ patient['prénom'] }}</td>
+      <td>{{patient['numéroSécuritéSociale']}}</td>
+      <td>{{ patient.sexe ? 'F' : 'M' }}</td>
+      <td>
+        <mat-form-field>
+          <mat-select (change)="affChanged($event)"  placeholder="Choisir infirmier"  [(ngModel)]="willAffectId" name="willAffectId">
+            <mat-option aria-selected="true" value="none-{{patient['numéroSécuritéSociale'] }}">Aucun</mat-option>
+            <mat-option *ngFor="let inf of infirmiers" value="{{ inf.id }}-{{ patient['numéroSécuritéSociale'] }}">{{ inf['prénom'] }} {{ inf.nom }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+
+    </tr>
+
+  <tr *ngIf="!patientsNonAffecte || patientsNonAffecte.length == 0">
+    <td colspan="6" > Pas de patient non affcete</td>
+  </tr>
+
+
+  </tbody>
+</table>
