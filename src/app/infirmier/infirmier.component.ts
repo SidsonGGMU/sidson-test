@@ -14,6 +14,8 @@ export class InfirmierComponent implements OnInit {
 
     patientsNonAffecte: PatientInterface[] = [];
     infirmiers: InfirmierInterface[] = [];
+    willAffectId:string = "none";
+
 
     //@Output()
     //selectionChange: EventEmitter<MatSelectChange> = new EventEmitter();
@@ -35,6 +37,25 @@ export class InfirmierComponent implements OnInit {
     ngOnInit() {
     }
 
+
+    affChanged(event){
+        if(this.willAffectId !== "none"){
+            if(confirm("Etes vous sure de vouloir desaffecte")){
+                this.http.post( "/affectation", {
+                    infirmier: "none",
+                    patient: this.willAffectId
+                })
+                    .toPromise()
+                    .then(data => {
+                        this.fetchData();
+                    })
+                    .catch(error => {
+                        alert("Erreur lors de la la deaffectation");
+                    })
+            }
+        }
+
+    }
 
 
 

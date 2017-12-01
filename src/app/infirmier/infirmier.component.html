@@ -5,7 +5,8 @@
     <th>Nom</th>
     <th>prenom</th>
     <th>Adresse</th>
-    <th>Patient</th>
+    <th>Les Patient Affacter</th>
+    <th>Desaffecter Patients</th>
   </tr>
   </thead>
   <tbody>
@@ -17,6 +18,14 @@
       <mat-form-field>
         <mat-select  placeholder="Liste Patients"  name="willAffectId">
           <mat-option *ngFor="let patient of inf.patients">{{ patient.nom }} {{ patient['prénom'] }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+
+    <td>
+      <mat-form-field>
+        <mat-select  (change)="affChanged($event)"  placeholder="Desaffecter un patient"  [(ngModel)]="willAffectId" name="willAffectId">
+          <mat-option *ngFor="let patient of inf.patients" value="{{ patient['numéroSécuritéSociale'] }}">{{ patient.nom }} {{ patient['prénom'] }}</mat-option>
         </mat-select>
       </mat-form-field>
     </td>
