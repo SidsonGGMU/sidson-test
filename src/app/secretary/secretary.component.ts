@@ -44,7 +44,7 @@ export class SecretaryComponent implements OnInit {
 
     @ViewChild("form") form: ElementRef;
 
-  constructor(private cabinetService: CabinetMedicalService , private http: Http ) {
+  constructor(private cabinetService: CabinetMedicalService , private http: Http , private refElem: ElementRef) {
     cabinetService.getData( '/data/cabinetInfirmier.xml' )
         .then(data => this.cabinet = data);
   }
@@ -62,39 +62,54 @@ export class SecretaryComponent implements OnInit {
 
   submit(): void{
 
-      this.http.post("/addPatient", {
-          patientName: this.patientName,
-          patientForname: this.patientForName,
-          patientNumber: this.patientNumber,
-          patientSex: this.patientSex,
-          patientBirthday: this.patientBirthday.split("/").reverse().join("-"),
-          patientFloor: this.patientFloor,
-          patientStreetNumber: this.patientStreetNumber,
-          patientStreet: this.patientStreetNumber,
-          patientPostalCode: this.patientPostalCode,
-          patientCity: this.patientCity
-      }).toPromise()
-          .then(data => {
-              this.form.nativeElement.reset();
-              window['swal']({
-                  text: 'Patient Crér avec success',
-                  title:"Succès",
-                  type: "success",
-                  showCancelButton: false,
-                  closeOnConfirm: true
-              }, () => {
-                  this.currentPage = 'aff-patient';
-              });
+      let allValid = true;
 
-      })
-          .catch(error => {
-            console.log(error)
-              window['swal']({
-                  text: 'Erreur lors de la creation',
-                  title:"Erreur",
-                  type: "error",
-              });
-          })
+      let field = this.refElem.nativeElement.querySelectorAll('input, select');
+
+      for (let i = 0; i < field.length; i++){
+          if(!field[i].reportValidity())
+          {
+              allValid = false;
+              break;
+          }
+      }
+
+      if(allValid){
+          this.http.post("/addPatient", {
+              patientName: this.patientName,
+              patientForname: this.patientForName,
+              patientNumber: this.patientNumber,
+              patientSex: this.patientSex || "M",
+              patientBirthday: this.patientBirthday.split("/").reverse().join("-"),
+              patientFloor: this.patientFloor,
+              patientStreetNumber: this.patientStreetNumber,
+              patientStreet: this.patientStreetNumber,
+              patientPostalCode: this.patientPostalCode,
+              patientCity: this.patientCity
+          }).toPromise()
+              .then(data => {
+                  this.form.nativeElement.reset();
+                  window['swal']({
+                      text: 'Patient Crér avec success',
+                      title:"Succès",
+                      type: "success",
+                      showCancelButton: false,
+                      closeOnConfirm: true
+                  }, () => {
+                      this.currentPage = 'aff-patient';
+                  });
+
+              })
+              .catch(error => {
+                  console.log(error)
+                  window['swal']({
+                      text: 'Erreur lors de la creation',
+                      title:"Erreur",
+                      type: "error",
+                  });
+              })
+      }
+
   }
 
 }
