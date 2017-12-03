@@ -76,12 +76,24 @@ export class SecretaryComponent implements OnInit {
       }).toPromise()
           .then(data => {
               this.form.nativeElement.reset();
-            this.currentPage = 'aff-patient';
+              window['swal']({
+                  text: 'Patient Crér avec success',
+                  title:"Succès",
+                  type: "success",
+                  showCancelButton: false,
+                  closeOnConfirm: true
+              }, () => {
+                  this.currentPage = 'aff-patient';
+              });
 
       })
           .catch(error => {
             console.log(error)
-            alert('Erreur lors de la creation')
+              window['swal']({
+                  text: 'Erreur lors de la creation',
+                  title:"Erreur",
+                  type: "error",
+              });
           })
   }
 

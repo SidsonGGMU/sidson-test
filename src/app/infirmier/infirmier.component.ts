@@ -40,19 +40,47 @@ export class InfirmierComponent implements OnInit {
 
     affChanged(event){
         if(this.willAffectId !== "none"){
-            if(confirm("Etes vous sure de vouloir desaffecte")){
-                this.http.post( "/affectation", {
-                    infirmier: "none",
-                    patient: this.willAffectId
-                })
-                    .toPromise()
-                    .then(data => {
-                        this.fetchData();
+
+            window['swal']({
+                text: 'Etes vous sure de vouloir deaffecte',
+                title:"Ete vous sure?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: true
+            },  (bool) => {
+                if(bool){
+                    this.http.post( "/affectation", {
+                        infirmier: "none",
+                        patient: this.willAffectId
                     })
-                    .catch(error => {
-                        alert("Erreur lors de la la deaffectation");
-                    })
-            }
+                        .toPromise()
+                        .then(data => {
+                            setTimeout(() => {
+                                window['swal']({
+                                    text: 'Patient desacfecté avec success',
+                                    title:"Succès",
+                                    type: "success",
+                                    showCancelButton: false,
+                                    closeOnConfirm: true
+                                }, () => {
+                                    this.fetchData();
+                                });
+                            }, 200)
+
+                        })
+                        .catch(error => {
+                            window['swal']({
+                                text: "Erreur lors de la la deaffectation",
+                                title:"Erreur",
+                                type: "error",
+                            });
+                        })
+                }
+                else{
+                    this.willAffectId = "none";
+                }
+            });
+
         }
 
     }
