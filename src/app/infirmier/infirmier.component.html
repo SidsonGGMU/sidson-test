@@ -1,12 +1,12 @@
-<h1>Liste infirmier</h1>
+<h1>Liste des infirmiers et de leurs patients</h1>
 <table class="heavyTable">
   <thead>
   <tr>
     <th>Nom</th>
-    <th>prenom</th>
+    <th>Prénom</th>
     <th>Adresse</th>
-    <th>Les Patient Affacter</th>
-    <th>Desaffecter Patients</th>
+    <th>Patients</th>
+    <th>Désaffecter un patient</th>
   </tr>
   </thead>
   <tbody>
@@ -16,7 +16,7 @@
     <td>{{ inf.adresse.rue }} {{ inf.adresse['numéro'] }} {{ inf.adresse['étage'] }} ,{{ inf.adresse.ville }} {{ inf.adresse.codePostal}}</td>
     <td>
       <mat-form-field>
-        <mat-select  placeholder="Liste Patients"  name="willAffectId">
+        <mat-select  placeholder="Liste patient(s)"  name="willAffectId">
           <mat-option *ngFor="let patient of inf.patients">{{ patient.nom }} {{ patient['prénom'] }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -24,7 +24,7 @@
 
     <td>
       <mat-form-field>
-        <mat-select  (change)="affChanged($event)"  placeholder="Desaffecter un patient"  [(ngModel)]="willAffectId" name="willAffectId">
+        <mat-select  (change)="affChanged($event)"  placeholder="Désaffecter un patient"  [(ngModel)]="willAffectId" name="willAffectId">
           <mat-option *ngFor="let patient of inf.patients" value="{{ patient['numéroSécuritéSociale'] }}">{{ patient.nom }} {{ patient['prénom'] }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -32,7 +32,7 @@
   </tr>
 
   <tr *ngIf="!infirmiers || infirmiers.length == 0">
-    <td colspan="6" > Pas de'infirmier</td>
+    <td colspan="6" > Il n'y a aucun infirmier actuellement</td>
   </tr>
 
 
