@@ -90,7 +90,7 @@ export class SecretaryComponent implements OnInit {
               .then(data => {
                   this.form.nativeElement.reset();
                   window['swal']({
-                      text: 'Patient Crér avec success',
+                      text: 'Patient ajouté avec succès',
                       title:"Succès",
                       type: "success",
                       showCancelButton: false,
@@ -103,7 +103,7 @@ export class SecretaryComponent implements OnInit {
               .catch(error => {
                   console.log(error)
                   window['swal']({
-                      text: 'Erreur lors de la creation',
+                      text: 'Opération échouée',
                       title:"Erreur",
                       type: "error",
                   });
