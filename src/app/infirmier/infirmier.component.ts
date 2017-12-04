@@ -42,8 +42,8 @@ export class InfirmierComponent implements OnInit {
         if(this.willAffectId !== "none"){
 
             window['swal']({
-                text: 'Etes vous sure de vouloir deaffecte',
-                title:"Ete vous sure?",
+                text: 'Veuillez confirmer votre choix',
+                title:"Confirmation requise",
                 type: "warning",
                 showCancelButton: true,
                 closeOnConfirm: true
@@ -57,7 +57,7 @@ export class InfirmierComponent implements OnInit {
                         .then(data => {
                             setTimeout(() => {
                                 window['swal']({
-                                    text: 'Patient desacfecté avec success',
+                                    text: 'Opération réussie',
                                     title:"Succès",
                                     type: "success",
                                     showCancelButton: false,
@@ -70,7 +70,7 @@ export class InfirmierComponent implements OnInit {
                         })
                         .catch(error => {
                             window['swal']({
-                                text: "Erreur lors de la la deaffectation",
+                                text: "Opération de désaffectation échouée",
                                 title:"Erreur",
                                 type: "error",
                             });
