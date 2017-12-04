@@ -43,8 +43,8 @@ export class PatientComponent implements OnInit {
       if(this.willAffectId !== "none"){
 
           window['swal']({
-              text: 'Etes vous sure de vouloir affecte',
-              title:"Ete vous sure?",
+              text: 'Veuillez confirmer votre choix',
+              title:"Confirmation requise",
               type: "warning",
               showCancelButton: true,
               closeOnConfirm: true
@@ -58,7 +58,7 @@ export class PatientComponent implements OnInit {
                       .then(data => {
                           setTimeout(() => {
                               window['swal']({
-                                  text: 'Patient afecté avec success',
+                                  text: 'Opération réussie',
                                   title:"Succès",
                                   type: "success",
                                   showCancelButton: false,
@@ -71,7 +71,7 @@ export class PatientComponent implements OnInit {
                       })
                       .catch(error => {
                           window['swal']({
-                              text: "Erreur lors de la l'affectation",
+                              text: "Opération échouée",
                               title:"Erreur",
                               type: "error",
                           });
